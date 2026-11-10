@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>אישור הגעה - בת המצווה של יפעת</title>
+
+  <!-- מניעת שמירה במטמון וטעינת הגרסה העדכנית ביותר בכל כניסה -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   
   <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -252,7 +257,7 @@
 
   <script>
     // -------------------------------------------------------------
-    // הדביקי כאן את הקישור שקיבלת מ-Apps Script (פריסה כ-Web App):
+    // הקישור מ-Apps Script (פריסה כ-Web App):
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwxowbTkyZX2JZORkInG1OmslKW1dpPsoMwHETz5daj7-5-4B_4Nf9RJJjIyIbOSGo/exec";
     // -------------------------------------------------------------
 
@@ -356,6 +361,13 @@
         submitBtn.innerText = "שליחת אישור הגעה";
       }
     }
+
+    // מנגנון המוודא שהדפדפן תמיד יטען גרסה עדכנית ולא עותק שמור
+    window.addEventListener('pageshow', function (event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
   </script>
 </body>
 </html>
