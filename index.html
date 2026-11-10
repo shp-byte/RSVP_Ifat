@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>אישור הגעה - בת המצווה של יפעת</title>
+  
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sage: {
+              50: '#f4f7f5',
+              100: '#e3ebe6',
+              200: '#c7d9ce',
+              500: '#52796f',
+              600: '#354f52',
+              800: '#2f3e46'
+            },
+            gold: {
+              400: '#d4af37',
+              500: '#c59b27',
+              600: '#aa8218'
+            }
+          },
+          fontFamily: {
+            sans: ['Assistant', 'sans-serif'],
+            serif: ['Playfair Display', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #f7faf8 0%, #edf3ef 50%, #f9fbf9 100%);
+      min-height: 100vh;
+    }
+    .gold-border {
+      border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+    .gold-glow:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    }
+    .modal-active {
+      display: flex !important;
+    }
+  </style>
+</head>
+<body class="text-sage-800 antialiased flex flex-col items-center justify-start p-4 sm:p-6 md:p-8">
+
+  <!-- Main Container -->
+  <main class="w-full max-w-lg bg-white/90 backdrop-blur-md rounded-3xl shadow-xl gold-border overflow-hidden p-6 sm:p-8 my-4 relative">
+    
+    <!-- Top Floral Graphic Header -->
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center justify-center space-x-2 space-x-reverse mb-2">
+        <span class="h-px w-8 bg-gold-400"></span>
+        <span class="text-gold-500 text-lg">🌿</span>
+        <span class="h-px w-8 bg-gold-400"></span>
+      </div>
+      <h1 class="text-3xl font-bold text-sage-800 tracking-wide font-serif">בת המצווה של יפעת</h1>
+      <p class="text-sm text-sage-500 mt-1 font-light">נשמח מאוד לראותכם בין אורחינו בשמחתנו</p>
+    </div>
+
+    <!-- Invitation Image Container with Zoom Button -->
+    <div class="relative group mb-6 rounded-2xl overflow-hidden border border-sage-100 shadow-sm bg-sage-50">
+      <img 
+        id="inviteThumb" 
+        src="invitation.jpg" 
+        alt="הזמנה לבת המצווה של יפעת" 
+        class="w-full h-auto object-contain cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
+        onclick="openModal()"
+        onerror="this.parentElement.innerHTML='<div class=\'p-8 text-center text-sage-500 text-sm\'>[נא לוודא שהתמונה invitation.jpg נמצאת באותה תיקייה ב-GitHub]</div>'"
+      >
+      <!-- Zoom Icon Button Overlay -->
+      <button 
+        type="button" 
+        onclick="openModal()" 
+        class="absolute bottom-3 left-3 bg-white/90 hover:bg-white text-sage-800 p-2.5 rounded-full shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-110 flex items-center justify-center border border-gold-400/40"
+        title="הגדלת ההזמנה"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gold-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Quick Action Buttons: Waze & Google Calendar -->
+    <div class="grid grid-cols-2 gap-3 mb-8">
+      <!-- Waze Navigation -->
+      <a 
+        href="https://waze.com/ul?q=%D7%9E%D7%95%D7%A2%D7%93%D7%95%D7%9F%20%D7%92%D7%93%D7%95%D7%9C%20%D7%A8%D7%91%D7%91%D7%94&navigate=yes" 
+        target="_blank" 
+        class="flex items-center justify-center space-x-2 space-x-reverse bg-sage-50 hover:bg-sage-100 text-sage-800 text-sm font-semibold py-2.5 px-3 rounded-xl border border-sage-200 transition-colors shadow-sm"
+      >
+        <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 2.98.97 4.29L1 23l6.71-1.97C9.02 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        <span>ניווט ב-Waze</span>
+      </a>
+
+      <!-- Google Calendar -->
+      <a 
+        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=%D7%91%D7%AA+%D7%94%D7%9E%D7%A6%D7%95%D7%95%D7%94+%D7%A9%D7%9C+%D7%99%D7%A4%D7%A2%D7%AA+%D7%A4%D7%95%D7%9C%D7%A1%D7%A7%D7%99&dates=20261129T170000Z/20261129T210000Z&details=%D7%A0%D7%A9%D7%9E%D7%97+%D7%9C%D7%A8%D7%90%D7%95%D7%AA%D7%9B%D7%9D+%D7%91%D7%97%D7%92%D7%99%D7%92%D7%AA+%D7%91%D7%AA+%D7%94%D7%9E%D7%A6%D7%95%D7%95%D7%94+%D7%A9%D7%9C+%D7%99%D7%A4%D7%A2%D7%AA!&location=%D7%9E%D7%95%D7%A2%D7%93%D7%95%D7%9F+%D7%92%D7%93%D7%95%D7%9C+%D7%A8%D7%91%D7%91%D7%94" 
+        target="_blank" 
+        class="flex items-center justify-center space-x-2 space-x-reverse bg-sage-50 hover:bg-sage-100 text-sage-800 text-sm font-semibold py-2.5 px-3 rounded-xl border border-sage-200 transition-colors shadow-sm"
+      >
+        <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        <span>הוספה ליומן</span>
+      </a>
+    </div>
+
+    <!-- RSVP Form -->
+    <form id="rsvpForm" onsubmit="handleSubmit(event)" class="space-y-6">
+
+      <!-- Step 1: Guest Category Selection -->
+      <div>
+        <label class="block text-sm font-semibold text-sage-800 mb-2">מי ממלא את הטופס?</label>
+        <div class="grid grid-cols-2 gap-3">
+          <button 
+            type="button" 
+            id="typeFriendBtn"
+            onclick="selectType('friend')"
+            class="py-3 px-4 rounded-2xl border text-sm font-bold transition-all text-center border-sage-200 bg-white hover:border-gold-400 shadow-sm"
+          >
+            חברה של יפעת ✨
+          </button>
+          
+          <button 
+            type="button" 
+            id="typeFamilyBtn"
+            onclick="selectType('family')"
+            class="py-3 px-4 rounded-2xl border text-sm font-bold transition-all text-center border-sage-200 bg-white hover:border-gold-400 shadow-sm"
+          >
+            משפחה וחברים 🌿
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Form Content (Hidden until type is selected) -->
+      <div id="dynamicFields" class="hidden space-y-5 pt-2 border-t border-sage-100">
+        
+        <!-- Full Name -->
+        <div>
+          <label id="nameLabel" for="fullName" class="block text-sm font-semibold text-sage-800 mb-1.5">שם מלא</label>
+          <input 
+            type="text" 
+            id="fullName" 
+            required 
+            placeholder="לדוגמה: רוני כהן" 
+            class="w-full px-4 py-3 rounded-xl border border-sage-200 text-sm gold-glow bg-white transition-all shadow-sm"
+          >
+        </div>
+
+        <!-- Attendance Radio Group -->
+        <div>
+          <label class="block text-sm font-semibold text-sage-800 mb-2">האם נתראה באירוע?</label>
+          <div class="space-y-2">
+            <label class="flex items-center p-3 rounded-xl border border-sage-100 hover:bg-sage-50 cursor-pointer transition-colors bg-white">
+              <input type="radio" name="attendance" value="yes" required onchange="handleAttendanceChange(this.value)" class="text-gold-500 focus:ring-gold-400 h-4 w-4">
+              <span id="labelYes" class="mr-3 text-sm font-medium text-sage-800">מגיעה לחגוג! 🎉</span>
+            </label>
+            <label class="flex items-center p-3 rounded-xl border border-sage-100 hover:bg-sage-50 cursor-pointer transition-colors bg-white">
+              <input type="radio" name="attendance" value="no" onchange="handleAttendanceChange(this.value)" class="text-gold-500 focus:ring-gold-400 h-4 w-4">
+              <span id="labelNo" class="mr-3 text-sm font-medium text-sage-600">לצערי לא אוכל להגיע</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Guest Count (Visible only for family/friends when arriving) -->
+        <div id="guestCountContainer" class="hidden">
+          <label for="guestCount" class="block text-sm font-semibold text-sage-800 mb-1.5">כמה תהיו בסך הכל?</label>
+          <input 
+            type="number" 
+            id="guestCount" 
+            min="1" 
+            max="12" 
+            value="1" 
+            class="w-24 px-4 py-2.5 rounded-xl border border-sage-200 text-sm gold-glow bg-white text-center font-bold"
+          >
+        </div>
+
+        <!-- Notes Field -->
+        <div>
+          <label for="notes" class="block text-sm font-semibold text-sage-800 mb-1.5">יש לך משהו נוסף לכתוב לנו?</label>
+          <textarea 
+            id="notes" 
+            rows="3" 
+            placeholder="ברכה קצרה, הודעה למשפחה או כל דבר אחר..." 
+            class="w-full px-4 py-2.5 rounded-xl border border-sage-200 text-sm gold-glow bg-white transition-all shadow-sm"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          id="submitBtn"
+          class="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-sage-600 to-sage-800 hover:from-sage-500 hover:to-sage-700 text-white font-bold text-base shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5"
+        >
+          שליחת אישור הגעה
+        </button>
+      </div>
+    </form>
+
+    <!-- Success Message Container -->
+    <div id="successCard" class="hidden text-center py-8 space-y-4">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-sage-100 text-gold-600 rounded-full text-2xl shadow-inner">
+        ✨
+      </div>
+      <h3 class="text-2xl font-bold text-sage-800 font-serif">תודה רבה, <span id="thankYouName"></span>!</h3>
+      <p class="text-sage-600 text-sm max-w-xs mx-auto leading-relaxed">
+        התשובה שלך התקבלה בהצלחה ונשמרה אצלנו. מחכים ומצפים לחגוג יחד!
+      </p>
+    </div>
+
+  </main>
+
+  <!-- Fullscreen Modal for Zoomed Image -->
+  <div 
+    id="imageModal" 
+    class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm items-center justify-center p-4"
+    onclick="closeModal()"
+  >
+    <div class="relative max-w-3xl w-full max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <button 
+        type="button" 
+        onclick="closeModal()" 
+        class="absolute -top-12 left-0 text-white hover:text-gold-400 text-3xl font-light focus:outline-none transition-colors"
+      >
+        ✕
+      </button>
+      <img 
+        src="invitation.jpg" 
+        alt="הזמנה מוגדלת" 
+        class="w-full h-auto max-h-[85vh] object-contain rounded-2xl shadow-2xl border border-white/20"
+      >
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // הדביקי כאן את כתובת ה-Web App שהעתקת מ-Google Apps Script:
+    const SCRIPT_URL = "https://script.google.com/macros/s/XXXXX-XXXXX/exec";
+    // -------------------------------------------------------------
+
+    let currentGuestType = null;
+
+    function selectType(type) {
+      currentGuestType = type;
+      const dynamicFields = document.getElementById('dynamicFields');
+      const friendBtn = document.getElementById('typeFriendBtn');
+      const familyBtn = document.getElementById('typeFamilyBtn');
+      const nameLabel = document.getElementById('nameLabel');
+      const labelYes = document.getElementById('labelYes');
+      const labelNo = document.getElementById('labelNo');
+      const guestCountContainer = document.getElementById('guestCountContainer');
+
+      dynamicFields.classList.remove('hidden');
+
+      if (type === 'friend') {
+        friendBtn.className = "py-3 px-4 rounded-2xl border text-sm font-bold text-center bg-sage-600 text-white border-sage-600 shadow-md";
+        familyBtn.className = "py-3 px-4 rounded-2xl border text-sm font-bold text-center border-sage-200 bg-white hover:border-gold-400 text-sage-800 shadow-sm";
+        nameLabel.innerText = "שם מלא";
+        labelYes.innerText = "מגיעה לחגוג! 🎉";
+        labelNo.innerText = "לצערי לא אוכל להגיע";
+        guestCountContainer.classList.add('hidden');
+      } else {
+        familyBtn.className = "py-3 px-4 rounded-2xl border text-sm font-bold text-center bg-sage-600 text-white border-sage-600 shadow-md";
+        friendBtn.className = "py-3 px-4 rounded-2xl border text-sm font-bold text-center border-sage-200 bg-white hover:border-gold-400 text-sage-800 shadow-sm";
+        nameLabel.innerText = "שם מלא / שם המשפחה";
+        labelYes.innerText = "נשמח להגיע בשמחה! 🌿";
+        labelNo.innerText = "נבצר מאיתנו להגיע";
+        
+        const attendanceYes = document.querySelector('input[name="attendance"][value="yes"]');
+        if (attendanceYes && attendanceYes.checked) {
+          guestCountContainer.classList.remove('hidden');
+        }
+      }
+    }
+
+    function handleAttendanceChange(value) {
+      const guestCountContainer = document.getElementById('guestCountContainer');
+      if (currentGuestType === 'family' && value === 'yes') {
+        guestCountContainer.classList.remove('hidden');
+      } else {
+        guestCountContainer.classList.add('hidden');
+      }
+    }
+
+    function openModal() {
+      document.getElementById('imageModal').classList.add('modal-active');
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.remove('modal-active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      const fullName = document.getElementById('fullName').value.trim();
+      const attendance = document.querySelector('input[name="attendance"]:checked').value;
+      const notes = document.getElementById('notes').value.trim();
+      
+      let guestCount = 0;
+      if (attendance === 'yes') {
+        guestCount = (currentGuestType === 'family') ? parseInt(document.getElementById('guestCount').value) || 1 : 1;
+      }
+
+      const payload = {
+        timestamp: new Date().toLocaleString("he-IL"),
+        guestType: currentGuestType === 'friend' ? 'חברה של יפעת' : 'משפחה וחברים',
+        fullName: fullName,
+        attendanceStatus: attendance === 'yes' ? 'מגיע/ה' : 'לא מגיע/ה',
+        guestCount: guestCount,
+        notes: notes
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = "שולח נתונים...";
+
+      try {
+        if (SCRIPT_URL && !SCRIPT_URL.includes("XXXXX")) {
+          await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+
+        document.getElementById('rsvpForm').classList.add('hidden');
+        document.getElementById('thankYouName').innerText = fullName;
+        document.getElementById('successCard').classList.remove('hidden');
+
+      } catch (err) {
+        alert("הייתה בעיה בשליחה, אנא נסו שוב.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "שליחת אישור הגעה";
+      }
+    }
+  </script>
+</body>
+</html>
