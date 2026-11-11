@@ -103,17 +103,17 @@
 
     <!-- Quick Action Buttons: Waze & Google Calendar -->
     <div class="grid grid-cols-2 gap-3 mb-8">
-      <!-- Waze Navigation -->
-      <a 
-        href="https://waze.com/ul?q=%D7%9E%D7%95%D7%A2%D7%93%D7%95%D7%9F%20%D7%92%D7%93%D7%95%D7%9C%20%D7%A8%D7%91%D7%91%D7%94&navigate=yes" 
-        target="_blank" 
-        class="flex items-center justify-center space-x-2 space-x-reverse bg-sage-50 hover:bg-sage-100 text-sage-800 text-sm font-semibold py-2.5 px-3 rounded-xl border border-sage-200 transition-colors shadow-sm"
+      <!-- Waze Navigation Button with Fallback Notice -->
+      <button 
+        type="button" 
+        onclick="openWazeOrShowNotice()" 
+        class="flex items-center justify-center space-x-2 space-x-reverse bg-sage-50 hover:bg-sage-100 text-sage-800 text-sm font-semibold py-2.5 px-3 rounded-xl border border-sage-200 transition-colors shadow-sm cursor-pointer"
       >
         <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 2.98.97 4.29L1 23l6.71-1.97C9.02 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
         </svg>
         <span>ניווט ב-Waze</span>
-      </a>
+      </button>
 
       <!-- Google Calendar -->
       <a 
@@ -255,6 +255,33 @@
     </div>
   </div>
 
+  <!-- Modal: Waze Notice if App Not Found -->
+  <div 
+    id="wazeNoticeModal" 
+    class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm items-center justify-center p-4"
+    onclick="closeWazeNotice()"
+  >
+    <div 
+      class="bg-white rounded-3xl p-6 sm:p-7 max-w-sm w-full text-center shadow-2xl border border-sage-100 relative space-y-4"
+      onclick="event.stopPropagation()"
+    >
+      <div class="inline-flex items-center justify-center w-14 h-14 bg-sage-50 text-blue-500 rounded-full text-2xl border border-sage-100">
+        🚗
+      </div>
+      <h3 class="text-xl font-bold text-sage-800 font-serif">הודעת ניווט</h3>
+      <p class="text-sage-700 text-sm leading-relaxed">
+        לא נמצאה האפליקציה, במידה מותקנת במכשירכם אפליקציית Waze רשמו בכתובת היעד <strong>"מועדון גדול רבבה"</strong>. נסיעה טובה!
+      </p>
+      <button 
+        type="button" 
+        onclick="closeWazeNotice()" 
+        class="w-full py-2.5 px-4 rounded-xl bg-sage-600 hover:bg-sage-700 text-white font-semibold text-sm transition-colors shadow-sm"
+      >
+        הבנתי, תודה
+      </button>
+    </div>
+  </div>
+
   <script>
     // -------------------------------------------------------------
     // הקישור מ-Apps Script (פריסה כ-Web App):
@@ -313,8 +340,41 @@
       document.getElementById('imageModal').classList.remove('modal-active');
     }
 
+    function openWazeOrShowNotice() {
+      const destination = encodeURIComponent("מועדון גדול רבבה");
+      const appUrl = "waze://?q=" + destination + "&navigate=yes";
+      
+      let appOpened = false;
+
+      const handleVisibilityChange = () => {
+        if (document.hidden) {
+          appOpened = true;
+        }
+      };
+
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+
+      // ניסיון לפתוח ישירות את אפליקציית Waze
+      window.location.href = appUrl;
+
+      // בדיקה לאחר 1.5 שניות: אם הדפדפן נשאר גלוי, האפליקציה לא נפתחה
+      setTimeout(() => {
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+        if (!appOpened && !document.hidden) {
+          document.getElementById('wazeNoticeModal').classList.add('modal-active');
+        }
+      }, 1500);
+    }
+
+    function closeWazeNotice() {
+      document.getElementById('wazeNoticeModal').classList.remove('modal-active');
+    }
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') {
+        closeModal();
+        closeWazeNotice();
+      }
     });
 
     async function handleSubmit(e) {
